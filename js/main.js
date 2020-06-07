@@ -29,12 +29,6 @@ var CHECKOUT_TIME = [
   '14:00'
 ];
 
-var PRICE_FROM = [
-  '1000',
-  '2000',
-  '3000'
-];
-
 var FACILITIES = [
   'wifi',
   'dishwasher',
@@ -65,21 +59,17 @@ var DESCRIPTIONS = [
   'Снять подвал'
 ];
 
-var PIN_X = 25;
-var PIN_Y = 70;
-
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
 var minmaxRandom = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  // return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 var getOffersList = function () {
@@ -90,17 +80,18 @@ var getOffersList = function () {
   return offers;
 };
 
+
 var getImageData = function (index) {
   var positionX = minmaxRandom(0, MAP_WIDTH);
   var positionY = minmaxRandom(MAP_TOP_Y, MAP_BOTTOM_Y);
-  var theCreator = {
+  var offer = {
     author: {
       avatar: 'img/avatars/user0' + (index + 1) + '.png'
     },
-    theCreator: {
+    offer: {
       title: getRandomElement(TITLES),
       address: positionX + ', ' + positionY,
-      price: getRandomInt(PRICE_FROM),
+      price: getRandomInt(10000, 20000),
       type: getRandomElement(USER_CHOICE),
       rooms: minmaxRandom(ROOM_FROM, ROOM_BEFORE),
       guests: minmaxRandom(GUEST_FROM, GUEST_BEFORE),
@@ -115,25 +106,36 @@ var getImageData = function (index) {
       y: positionY
     }
   };
-  return theCreator;
+  return offer;
 };
-//getImageData();
-
-var map = document.querySelector('.map');
-activateMap(map);
-
 var activateMap = function (addMap) {
   addMap.classList.remove('map--faded');
 };
 
-var mapPins = document.querySelector('.map__pins');
+var map = document.querySelector('.map');
+activateMap(map);
 
-var pinTemplate = document.querySelector('#pin');
 
-var activatePin = function (addPin) {
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+var renderPin = function (pinData) {
   var pin = pinTemplate.cloneNode(true);
-  var pinX = addPin.position.x + PIN_X;
-  var pinY = addPin.position.y + PIN_Y;
-  pin.style = 'left: ' + pinX + 'px; top: ' + pinY + 'px;';
+  pin.style.left = pinData.location.x + 'px';
+  pin.style.top = pinData.location.y + 'px';
+
+  var pinAvatar = pin.querySelector('img');
+  pinAvatar.src = pinData.author.avatar;
+  pinAvatar.alt = pinData.offer.title;
+
   return pin;
+
 };
+
+var offersList = getOffersList();
+
+var fragment = document.createDocumentFragment();
+for (var j = 0; j < offersList.length; j++) {
+  fragment.appendChild(renderPin(offersList[j]));
+}
+map.appendChild(fragment);
+console.log(offersList);
