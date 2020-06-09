@@ -64,7 +64,6 @@ var getRandomElement = function (arr) {
 };
 
 var minmaxRandom = function (min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
   return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
@@ -80,11 +79,28 @@ var getOffersList = function () {
   return offers;
 };
 
+var createFeatures = function (arr) {
+  var numberElement = minmaxRandom(1, arr.length);
+  var features = [];
+  var feature = getRandomElement(arr);
+
+  for (var i = 0; i < numberElement; i++) {
+
+    while (features.includes(feature)) {
+      feature = getRandomElement(arr);
+    }
+
+    features[i] = feature;
+  }
+
+  return features;
+};
+
 
 var getImageData = function (index) {
   var positionX = minmaxRandom(0, MAP_WIDTH);
   var positionY = minmaxRandom(MAP_TOP_Y, MAP_BOTTOM_Y);
-  var offer = {
+  return {
     author: {
       avatar: 'img/avatars/user0' + (index + 1) + '.png'
     },
@@ -97,17 +113,18 @@ var getImageData = function (index) {
       guests: minmaxRandom(GUEST_FROM, GUEST_BEFORE),
       checkin: getRandomElement(CHECKIN_TIME),
       checkout: getRandomElement(CHECKOUT_TIME),
-      features: getRandomElement(FACILITIES),
+      features: createFeatures(FACILITIES),
       description: getRandomElement(DESCRIPTIONS),
-      photos: (PHOTOS)
+      photos: createFeatures(PHOTOS)
     },
     location: {
       x: positionX,
       y: positionY
     }
   };
-  return offer;
 };
+
+
 var activateMap = function (addMap) {
   addMap.classList.remove('map--faded');
 };
@@ -138,4 +155,3 @@ for (var j = 0; j < offersList.length; j++) {
   fragment.appendChild(renderPin(offersList[j]));
 }
 map.appendChild(fragment);
-console.log(offersList);
