@@ -196,3 +196,11 @@ var createCard = function (cardView) {
   return card;
 
 };
+
+var mapFiltersContainer = map.querySelector('.map__filters-container');
+
+var renderCard = function (card) {
+  map.insertBefore(card, mapFiltersContainer);
+};
+renderCard(mapFiltersContainer);
+console.log(card);
