@@ -155,3 +155,44 @@ for (var j = 0; j < offersList.length; j++) {
   fragment.appendChild(renderPin(offersList[j]));
 }
 map.appendChild(fragment);
+
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
+var createCard = function (cardView) {
+  var card = cardTemplate.cloneNode(true);
+
+  var title = card.querySelector('.popup__title');
+  title.textContent = cardView.pinData.title;
+
+  var address = card.querySelector('.popup__text--address');
+  address.textContent = cardView.pinData.address;
+
+  var price = card.querySelector('.popup__text--price');
+  price.textContent = cardView.pinData.price + ' ₽/ночь';
+
+  var offerType = [];
+  offerType.push(cardView.pinData.popupType);
+  offerType.textContent = (offerType, USER_CHOICE);
+
+  var capacity = card.querySelector('.popup__text--capacity');
+  var cardText = (cardView.pinData.rooms, cardView.pinData.guests);
+  capacity.textContent = cardText;
+
+  var time = card.querySelector('.popup__text--time');
+  time.textContent = 'Заезд после ' + cardView.pinData.checkin + ', выезд до ' + cardView.pinData.checkout;
+
+  var features = card.querySelector('.popup__features');
+  features.textContent = (cardView.pinData.FACILITIES);
+
+  var description = card.querySelector('.popup__description');
+  description.textContent = cardView.pinData.description;
+
+  var photos = card.querySelector('.popup__photos');
+  photos.innerHTML = (cardView.pinData.photos);
+
+  var avatar = card.querySelector('.popup__avatar');
+  avatar.src = cardView.pinData.avatar;
+
+  return card;
+
+};
