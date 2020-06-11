@@ -124,7 +124,6 @@ var getImageData = function (index) {
   };
 };
 
-
 var activateMap = function (addMap) {
   addMap.classList.remove('map--faded');
 };
@@ -147,7 +146,6 @@ var renderPin = function (pinData) {
   return pin;
 
 };
-
 var offersList = getOffersList();
 
 var fragment = document.createDocumentFragment();
@@ -155,6 +153,17 @@ for (var j = 0; j < offersList.length; j++) {
   fragment.appendChild(renderPin(offersList[j]));
 }
 map.appendChild(fragment);
+
+var addPhoto = function (photos) {
+  var img = '';
+
+  for (var i = 0; i < photos.length; i++) {
+    img += '<img src="' + photos[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+  }
+
+  return img;
+};
+addPhoto(offersList[0]);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -164,14 +173,14 @@ var createCard = function (cardView) {
   var title = card.querySelector('.popup__title');
   title.textContent = cardView.pinData.title;
 
+
   var address = card.querySelector('.popup__text--address');
   address.textContent = cardView.pinData.address;
 
   var price = card.querySelector('.popup__text--price');
   price.textContent = cardView.pinData.price + ' ₽/ночь';
 
-  var offerType = [];
-  offerType.push(cardView.pinData.popupType);
+  var offerType = card.querySelector('.popup__type');
   offerType.textContent = (offerType, USER_CHOICE);
 
   var capacity = card.querySelector('.popup__text--capacity');
@@ -188,19 +197,20 @@ var createCard = function (cardView) {
   description.textContent = cardView.pinData.description;
 
   var photos = card.querySelector('.popup__photos');
-  photos.innerHTML = (cardView.pinData.photos);
+  photos.innerHTML = addPhoto(cardView.pinData.photos);
 
   var avatar = card.querySelector('.popup__avatar');
   avatar.src = cardView.pinData.avatar;
 
   return card;
-
+  console.log(cardView);
 };
+
 
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 
 var renderCard = function (card) {
-  map.insertBefore(card, mapFiltersContainer);
+  map.insertBefore(cardTemplate, mapFiltersContainer);
 };
-renderCard(mapFiltersContainer);
-console.log(card);
+renderCard(createCard);
+
