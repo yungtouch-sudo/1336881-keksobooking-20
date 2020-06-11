@@ -168,6 +168,7 @@ addPhoto(offersList[0]);
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 var createCard = function (cardView) {
+
   var card = cardTemplate.cloneNode(true);
 
   var title = card.querySelector('.popup__title');
@@ -201,7 +202,6 @@ var createCard = function (cardView) {
 
   var avatar = card.querySelector('.popup__avatar');
   avatar.src = cardView.pinData.avatar;
-
   return card;
   console.log(cardView);
 };
@@ -209,7 +209,7 @@ var createCard = function (cardView) {
 
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 
-var renderCard = function (card) {
+var renderCard = function (createCard) {
   map.insertBefore(cardTemplate, mapFiltersContainer);
 };
 renderCard(createCard);
