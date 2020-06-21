@@ -176,9 +176,6 @@ var addPhoto = function (photos) {
   return img;
 };
 
-
-
-
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 var createCard = function (cardView) {
@@ -228,16 +225,16 @@ var renderCard = function (card) {
 };
 renderCard(createCard(offersList[0]));
 
-var setAdres = function (x, y){
+var setAdres = function (){
   var adresInput = document.querySelector('#address');
-  adresInput.value = x + ', ' + y;
+  var mainIcon = document.querySelector('.map__pin--main');
+  adresInput.value = mainIcon.offsetTop + ', ' + mainIcon.offsetLeft;
 };
 
 
 var mapPinMain = document.querySelector('.map__pin--main');
 mapPinMain.addEventListener('mousedown', function (evt){
   if (evt.button === 0) {
-    console.log(evt);
     activateMap();
     setAdres(evt.target.offsetTop, evt.target.offsetLeft);
   }
@@ -245,20 +242,19 @@ mapPinMain.addEventListener('mousedown', function (evt){
 mapPinMain.addEventListener('keydown', function (evt) {
   if (evt.key === 'Tab') {
     activateMap();
-    setAdres(evt.target.offsetTop, evt.target.offsetLeft);
+    setAdres();
   }
 });
 
 var roomCapacity = function (evt){
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
-  console.log(roomNumber, capacity);
+  capacity.setCustomValidity('');
+  roomNumber.setCustomValidity('');
   if (roomNumber.value === 100 && capacity.value !== 0) {
-    console.log(roomNumber.value, capacity.value);
     capacity.setCustomValidity('100 комнат не для гостей');
   }
   if (capacity.value > roomNumber.value) {
-    console.log(roomNumber.value, capacity.value);
     capacity.setCustomValidity('число гостей не должно превышать число коммнат.');
     roomNumber.setCustomValidity('число гостей не должно превышать число коммнат.');
   }
