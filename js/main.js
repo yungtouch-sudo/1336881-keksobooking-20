@@ -124,12 +124,24 @@ var getImageData = function (index) {
   };
 };
 
-var activateMap = function (addMap) {
-  addMap.classList.remove('map--faded');
+var activateMap = function () {
+  map.classList.remove('map--faded');
+  var addForm = document.querySelector('.ad-form');
+  addForm.classList.remove('ad-form--disabled');
+  var inputSelect = addForm.querySelectorAll('input, select');
+  for (var i = 0; i < inputSelect.length; i += 1) {
+    inputSelect[i].removeAttribute('disabled');
+  }
+  var mapFilters = document.querySelector('.map__filters');
+  mapFilters.classList.remove('map__filters--disabled');
+  var mapFiltersInputSelect = mapFilters.querySelectorAll('input, select');
+  for (var k = 0; k < mapFiltersInputSelect.length; k += 1) {
+    mapFiltersInputSelect[k].removeAttribute('disabled');
+  }
 };
 
 var map = document.querySelector('.map');
-activateMap(map);
+//activateMap(map);
 
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -163,54 +175,97 @@ var addPhoto = function (photos) {
 
   return img;
 };
-addPhoto(offersList[0]);
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 var createCard = function (cardView) {
 
   var card = cardTemplate.cloneNode(true);
+  var avatar = card.querySelector('.popup__avatar');
+  avatar.src = cardView.author.avatar;
 
   var title = card.querySelector('.popup__title');
-  title.textContent = cardView.pinData.title;
+  title.textContent = cardView.offer.title;
 
 
   var address = card.querySelector('.popup__text--address');
-  address.textContent = cardView.pinData.address;
+  address.textContent = cardView.offer.address;
 
   var price = card.querySelector('.popup__text--price');
-  price.textContent = cardView.pinData.price + ' ₽/ночь';
+  price.textContent = cardView.offer.price + ' ₽/ночь';
 
   var offerType = card.querySelector('.popup__type');
   offerType.textContent = (offerType, USER_CHOICE);
 
   var capacity = card.querySelector('.popup__text--capacity');
-  var cardText = (cardView.pinData.rooms, cardView.pinData.guests);
+  var cardText = (cardView.offer.rooms, cardView.offer.guests);
   capacity.textContent = cardText;
 
   var time = card.querySelector('.popup__text--time');
-  time.textContent = 'Заезд после ' + cardView.pinData.checkin + ', выезд до ' + cardView.pinData.checkout;
+  time.textContent = 'Заезд после ' + cardView.offer.checkin + ', выезд до ' + cardView.offer.checkout;
 
   var features = card.querySelector('.popup__features');
-  features.textContent = (cardView.pinData.FACILITIES);
+  features.textContent = (cardView.offer.FACILITIES);
 
   var description = card.querySelector('.popup__description');
-  description.textContent = cardView.pinData.description;
+  description.textContent = cardView.offer.description;
 
   var photos = card.querySelector('.popup__photos');
-  photos.innerHTML = addPhoto(cardView.pinData.photos);
+  photos.innerHTML = addPhoto(cardView.offer.photos);
 
-  var avatar = card.querySelector('.popup__avatar');
-  avatar.src = cardView.pinData.avatar;
   return card;
-  console.log(cardView);
 };
 
+createCard(offersList[0]);
 
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 
-var renderCard = function (createCard) {
-  map.insertBefore(cardTemplate, mapFiltersContainer);
+var renderCard = function (card) {
+  map.insertBefore(card, mapFiltersContainer);
 };
-renderCard(createCard);
+renderCard(createCard(offersList[0]));
 
+var setAdres = function (){
+  var adresInput = document.querySelector('#address');
+  var mainIcon = document.querySelector('.map__pin--main');
+  adresInput.value = mainIcon.offsetTop + ', ' + mainIcon.offsetLeft;
+};
+
+
+var mapPinMain = document.querySelector('.map__pin--main');
+mapPinMain.addEventListener('mousedown', function (evt){
+  if (evt.button === 0) {
+    activateMap();
+    setAdres(evt.target.offsetTop, evt.target.offsetLeft);
+  }
+});
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Tab') {
+    activateMap();
+    setAdres();
+  }
+});
+
+var roomCapacity = function (evt){
+  var roomNumber = document.querySelector('#room_number');
+  var capacity = document.querySelector('#capacity');
+  capacity.setCustomValidity('');
+  roomNumber.setCustomValidity('');
+  if (roomNumber.value === 100 && capacity.value !== 0) {
+    capacity.setCustomValidity('100 комнат не для гостей');
+  }
+  if (capacity.value > roomNumber.value) {
+    capacity.setCustomValidity('число гостей не должно превышать число коммнат.');
+    roomNumber.setCustomValidity('число гостей не должно превышать число коммнат.');
+  }
+};
+
+var roomNumber = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
+var adForm = document.querySelector('.ad-form');
+
+// adForm.addEventListener('submit', roomCapacity);
+
+roomNumber.addEventListener('input', roomCapacity);
+capacity.addEventListener('input', roomCapacity);
