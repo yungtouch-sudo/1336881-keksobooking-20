@@ -141,7 +141,6 @@ var activateMap = function () {
 };
 
 var map = document.querySelector('.map');
-//activateMap(map);
 
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -150,6 +149,19 @@ var renderPin = function (pinData) {
   var pin = pinTemplate.cloneNode(true);
   pin.style.left = pinData.location.x + 'px';
   pin.style.top = pinData.location.y + 'px';
+
+  pin.addEventListener('click', function () {
+    popupClose();
+    renderCard(createCard(pinData));
+  });
+
+  pin.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      popupClose();
+      renderCard(createCard(pinData));
+    }
+
+  });
 
   var pinAvatar = pin.querySelector('img');
   pinAvatar.src = pinData.author.avatar;
@@ -216,7 +228,10 @@ var createCard = function (cardView) {
   return card;
 };
 
-createCard(offersList[0]);
+var popupClose = function () {
+  var mapCard = document.querySelector('.map__card');
+  mapCard.remove();
+};
 
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 
@@ -224,6 +239,19 @@ var renderCard = function (card) {
   map.insertBefore(card, mapFiltersContainer);
 };
 renderCard(createCard(offersList[0]));
+
+var closeModal = function () {
+  var mapCard = document.querySelector('.map__card');
+  mapCard.remove();
+};
+var modalCard = document.querySelector('.popup__close');
+modalCard.addEventListener('click', closeModal);
+document.addEventListener("keydown", function(evt) {
+  if (evt.key === 'Escape'){
+    closeModal();
+  }
+});
+
 
 var setAdres = function (){
   var adresInput = document.querySelector('#address');
@@ -269,3 +297,5 @@ var adForm = document.querySelector('.ad-form');
 
 roomNumber.addEventListener('input', roomCapacity);
 capacity.addEventListener('input', roomCapacity);
+
+
