@@ -43,4 +43,24 @@
     var mapFiltersContainer = window.map.querySelector('.map__filters-container');
     window.map.insertBefore(card, mapFiltersContainer);
   };
+
+  var mapPin = document.querySelector('.map__pin--main');
+  var mapPinMove = false;
+  var mapGlobal = document.querySelector('.map');
+  mapGlobal.addEventListener('mousemove', function (evt){
+    if (mapPinMove) {
+      mapPin.style.top = (evt.pageY - mapGlobal.offsetTop - 32) + 'px';
+      mapPin.style.left = (evt.pageX - mapGlobal.offsetLeft - 32) + 'px';
+    }
+  });
+  mapPin.addEventListener('mousedown', function (){
+    mapPinMove = true;
+  });
+  mapPin.addEventListener('mouseup', function (evt){
+    mapPinMove = false;
+    window.setAdres(evt.target.offsetTop - 75, evt.target.offsetLeft - 32);
+  });
+
+
 })();
+

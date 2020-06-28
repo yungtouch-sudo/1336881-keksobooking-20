@@ -23,7 +23,6 @@ var mapPinMain = document.querySelector('.map__pin--main');
 mapPinMain.addEventListener('mousedown', function (evt){
   if (evt.button === 0) {
     window.activateMap();
-    window.setAdres(evt.target.offsetTop, evt.target.offsetLeft);
   }
 });
 mapPinMain.addEventListener('keydown', function (evt) {
