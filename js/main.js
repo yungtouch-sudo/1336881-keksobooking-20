@@ -3,11 +3,7 @@
 window.map = document.querySelector('.map');
 var offersList = window.getOffersList();
 
-var fragment = document.createDocumentFragment();
-for (var j = 0; j < offersList.length; j++) {
-  fragment.appendChild(window.renderPin(offersList[j]));
-}
-window.map.appendChild(fragment);
+
 
 window.renderCard(window.createCard(offersList[0]));
 
@@ -43,3 +39,18 @@ roomNumber.addEventListener('input', window.roomCapacity);
 capacity.addEventListener('input', window.roomCapacity);
 
 
+(function () {
+  var onError = function (message) {
+    console.error(message);
+  };
+
+  var onSuccess = function (data) {
+    var fragment = document.createDocumentFragment();
+    for (var j = 0; j < data.length; j++) {
+      fragment.appendChild(window.renderPin(data[j]));
+    }
+    window.map.appendChild(fragment);
+  };
+
+  window.load('https://javascript.pages.academy/keksobooking/data', onSuccess, onError);
+})();
