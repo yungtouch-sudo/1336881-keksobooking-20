@@ -16,4 +16,20 @@
       mapFiltersInputSelect[k].removeAttribute('disabled');
     }
   };
+  window.inActivateMap = function (){
+    window.map.classList.add('map--faded');
+    var addForm = document.querySelector('.ad-form');
+    addForm.reset();
+    addForm.classList.add('ad-form--disabled');
+    var inputSelect = addForm.querySelectorAll('input, select');
+    for (var i = 0; i < inputSelect.length; i += 1) {
+      inputSelect[i].setAttribute('disabled', 'disabled');
+    }
+    var mapFilters = document.querySelector('.map__filters');
+    mapFilters.classList.add('map__filters--disabled');
+    var mapFiltersInputSelect = mapFilters.querySelectorAll('input, select');
+    for (var k = 0; k < mapFiltersInputSelect.length; k += 1) {
+      mapFiltersInputSelect[k].setAttribute('disabled', 'disabled');
+    }
+  };
 })();
