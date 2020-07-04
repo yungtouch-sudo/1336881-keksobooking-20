@@ -51,6 +51,32 @@ capacity.addEventListener('input', window.roomCapacity);
     }
     window.map.appendChild(fragment);
   };
-
   window.load('https://javascript.pages.academy/keksobooking/data', onSuccess, onError);
+  var titleInput = document.querySelector('#title');
+  titleInput.addEventListener('input', window.titleLength);
+  var onPostSuccess = function () {
+    window.inActivateMap();
+    var successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+    window.map.appendChild(successMessage);
+    successMessage.addEventListener('click', function () {
+      successMessage.remove();
+    });
+    document.addEventListener('keydown', function (evt){
+      if (evt.key === 'Escape'){
+        successMessage.remove();
+      };
+    });
+  };
+
+  var form = document.querySelector('.ad-form');
+  var submitHandler = function (evt) {
+    window.upload(new FormData(form), onPostSuccess);
+    evt.preventDefault();
+  };
+  form.addEventListener('submit', submitHandler);
+
 })();
+
+
+
+
