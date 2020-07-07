@@ -20,9 +20,10 @@
       roomNumber.setCustomValidity('число гостей не должно превышать число коммнат.');
     }
   };
-  window.titleLength = function (){
+  window.titleLength = function () {
     var titleInput = document.querySelector('#title');
-    if (titleInput.value.length < 30){
+    titleInput.setCustomValidity('');
+    if (titleInput.value.length < 30) {
       titleInput.setCustomValidity('Заголовок должен быть больше 30-ти символов!');
     }
   };
