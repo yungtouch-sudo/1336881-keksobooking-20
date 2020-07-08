@@ -18,17 +18,33 @@
     price.textContent = cardView.offer.price + ' ₽/ночь';
 
     var offerType = card.querySelector('.popup__type');
-    offerType.textContent = (offerType, window.USER_CHOICE);
+    var ruType = '';
+    if (cardView.offer.type === 'flat') ruType = 'Квартира';
+    if (cardView.offer.type === 'palace') ruType = 'Комната';
+    if (cardView.offer.type === 'house') ruType = 'Дом';
+    if (cardView.offer.type === 'bungalo') ruType = 'Бунгало';
+    offerType.textContent = ruType;
+
+    console.log(cardView.offer.features);
+
+    console.log(cardView);
 
     var capacity = card.querySelector('.popup__text--capacity');
-    var cardText = (cardView.offer.rooms, cardView.offer.guests);
+    var cardText = cardView.offer.rooms + ' комнаты для ' + cardView.offer.guests + ' гостей.';
     capacity.textContent = cardText;
 
     var time = card.querySelector('.popup__text--time');
     time.textContent = 'Заезд после ' + cardView.offer.checkin + ', выезд до ' + cardView.offer.checkout;
 
     var features = card.querySelector('.popup__features');
-    features.textContent = (cardView.offer.FACILITIES);
+    features.textContent = '';
+    for (var i = 0; i < cardView.offer.features.length; i += 1) {
+      var feature = document.createElement('li');
+      feature.classList.add('popup__feature');
+      feature.classList.add('popup__feature--' + cardView.offer.features[i]);
+      console.log(feature);
+      features.appendChild(feature);
+    }
 
     var description = card.querySelector('.popup__description');
     description.textContent = cardView.offer.description;

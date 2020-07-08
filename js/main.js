@@ -46,7 +46,7 @@ capacity.addEventListener('input', window.roomCapacity);
 
   var onSuccess = function (data) {
     var fragment = document.createDocumentFragment();
-    for (var j = 0; j < data.length; j++) {
+    for (var j = 0; j < 5; j++) {
       fragment.appendChild(window.renderPin(data[j]));
     }
     window.map.appendChild(fragment);
