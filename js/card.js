@@ -19,16 +19,19 @@
 
     var offerType = card.querySelector('.popup__type');
     var ruType = '';
-    if (cardView.offer.type === 'flat') ruType = 'Квартира';
-    if (cardView.offer.type === 'palace') ruType = 'Комната';
-    if (cardView.offer.type === 'house') ruType = 'Дом';
-    if (cardView.offer.type === 'bungalo') ruType = 'Бунгало';
+    if (cardView.offer.type === 'flat') {
+      ruType = 'Квартира';
+    }
+    if (cardView.offer.type === 'palace') {
+      ruType = 'Комната';
+    }
+    if (cardView.offer.type === 'house') {
+      ruType = 'Дом';
+    }
+    if (cardView.offer.type === 'bungalo') {
+      ruType = 'Бунгало';
+    }
     offerType.textContent = ruType;
-
-    console.log(cardView.offer.features);
-
-    console.log(cardView);
-
     var capacity = card.querySelector('.popup__text--capacity');
     var cardText = cardView.offer.rooms + ' комнаты для ' + cardView.offer.guests + ' гостей.';
     capacity.textContent = cardText;
@@ -42,7 +45,6 @@
       var feature = document.createElement('li');
       feature.classList.add('popup__feature');
       feature.classList.add('popup__feature--' + cardView.offer.features[i]);
-      console.log(feature);
       features.appendChild(feature);
     }
 
@@ -63,16 +65,16 @@
   var mapPin = document.querySelector('.map__pin--main');
   var mapPinMove = false;
   var mapGlobal = document.querySelector('.map');
-  mapGlobal.addEventListener('mousemove', function (evt){
+  mapGlobal.addEventListener('mousemove', function (evt) {
     if (mapPinMove) {
       mapPin.style.top = (evt.pageY - mapGlobal.offsetTop - 32) + 'px';
       mapPin.style.left = (evt.pageX - mapGlobal.offsetLeft - 32) + 'px';
     }
   });
-  mapPin.addEventListener('mousedown', function (){
+  mapPin.addEventListener('mousedown', function () {
     mapPinMove = true;
   });
-  mapPin.addEventListener('mouseup', function (evt){
+  mapPin.addEventListener('mouseup', function (evt) {
     mapPinMove = false;
     window.setAdres(evt.target.offsetTop - 75, evt.target.offsetLeft - 32);
   });

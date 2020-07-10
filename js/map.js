@@ -16,7 +16,7 @@
       mapFiltersInputSelect[k].removeAttribute('disabled');
     }
   };
-  window.inActivateMap = function (){
+  window.inActivateMap = function () {
     window.map.classList.add('map--faded');
     var addForm = document.querySelector('.ad-form');
     addForm.reset();
