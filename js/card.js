@@ -1,6 +1,17 @@
 'use strict';
 
 (function () {
+
+  window.addPhoto = function (photos) {
+    var img = '';
+
+    for (var i = 0; i < photos.length; i++) {
+      img += '<img src="' + photos[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+    }
+
+    return img;
+  };
+
   window.createCard = function (cardView) {
     var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
     var card = cardTemplate.cloneNode(true);
@@ -54,6 +65,14 @@
     var photos = card.querySelector('.popup__photos');
     photos.innerHTML = window.addPhoto(cardView.offer.photos);
 
+    card.addEventListener('click', window.popupClose);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        window.popupClose();
+      }
+    });
+
+
     return card;
   };
 
@@ -62,23 +81,5 @@
     window.map.insertBefore(card, mapFiltersContainer);
   };
 
-  var mapPin = document.querySelector('.map__pin--main');
-  var mapPinMove = false;
-  var mapGlobal = document.querySelector('.map');
-  mapGlobal.addEventListener('mousemove', function (evt) {
-    if (mapPinMove) {
-      mapPin.style.top = (evt.pageY - mapGlobal.offsetTop - 32) + 'px';
-      mapPin.style.left = (evt.pageX - mapGlobal.offsetLeft - 32) + 'px';
-    }
-  });
-  mapPin.addEventListener('mousedown', function () {
-    mapPinMove = true;
-  });
-  mapPin.addEventListener('mouseup', function (evt) {
-    mapPinMove = false;
-    window.setAdres(evt.target.offsetTop - 75, evt.target.offsetLeft - 32);
-  });
-
 
 })();
-

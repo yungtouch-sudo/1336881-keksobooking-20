@@ -1,13 +1,30 @@
 'use strict';
-
 (function () {
-  window.setAdres = function () {
+  window.setAdress = function () {
     var adresInput = document.querySelector('#address');
-    var mainIcon = document.querySelector('.map__pin--main');
-    adresInput.value = mainIcon.offsetTop + ', ' + mainIcon.offsetLeft;
+    adresInput.value = window.mainPin.offsetTop + ', ' + window.mainPin.offsetLeft;
   };
 
-  window.roomCapacity = function () {
+  window.activateForm = function () {
+    var addForm = document.querySelector('.ad-form');
+    addForm.classList.remove('ad-form--disabled');
+    var inputSelect = addForm.querySelectorAll('input, select');
+    for (var i = 0; i < inputSelect.length; i += 1) {
+      inputSelect[i].removeAttribute('disabled');
+    }
+  };
+
+  window.deactivateForm = function () {
+    var addForm = document.querySelector('.ad-form');
+    addForm.reset();
+    addForm.classList.add('ad-form--disabled');
+    var inputSelect = addForm.querySelectorAll('input, select');
+    for (var i = 0; i < inputSelect.length; i += 1) {
+      inputSelect[i].setAttribute('disabled', 'disabled');
+    }
+  };
+
+  window.roomCapacityValidte = function () {
     var roomNumber = document.querySelector('#room_number');
     var capacity = document.querySelector('#capacity');
     capacity.setCustomValidity('');
@@ -20,11 +37,19 @@
       roomNumber.setCustomValidity('число гостей не должно превышать число коммнат.');
     }
   };
-  window.titleLength = function () {
+
+  window.titleLengthValidate = function () {
     var titleInput = document.querySelector('#title');
     titleInput.setCustomValidity('');
     if (titleInput.value.length < 30) {
       titleInput.setCustomValidity('Заголовок должен быть больше 30-ти символов!');
     }
   };
+
+  window.resetImg = function () {
+    document.querySelector('.ad-form-header__preview img').remove();
+    document.querySelector('.ad-form__photo').remove();
+  };
+
 })();
+
