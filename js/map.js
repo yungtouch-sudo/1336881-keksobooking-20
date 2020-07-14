@@ -98,5 +98,9 @@
     window.setAdress(evt.target.offsetTop - 75, evt.target.offsetLeft - 32);
   });
 
+  window.resetMapPin = function () {
+    window.mainPin.style.top = 375 + 'px';
+    window.mainPin.style.left = 570 + 'px';
+  };
 })();
 

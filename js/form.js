@@ -46,6 +46,10 @@
     }
   };
 
+  window.resetImg = function () {
+    document.querySelector('.ad-form-header__preview img').remove();
+    document.querySelector('.ad-form__photo').remove();
+  };
 
 })();
 

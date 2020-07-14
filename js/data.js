@@ -6,5 +6,6 @@
   window.filters = {};
   window.offers = [];
   window.pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  window.resetMap = document.querySelector('.ad-form__reset');
 })();
 

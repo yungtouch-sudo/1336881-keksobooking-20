@@ -19,6 +19,9 @@ function activate() {
 function deactivate() {
   window.deactivateMap();
   window.deactivateForm();
+  window.resetMapPin();
+  window.setAdress();
+  window.resetImg();
 }
 
 var onPostSuccess = function () {
@@ -86,5 +89,8 @@ housingInput.addEventListener('input', function (evt) {
 
 var titleInput = document.querySelector('#title');
 titleInput.addEventListener('input', window.titleLength);
+
+window.resetMap.addEventListener('click', deactivate);
+window.setAdress();
 
 
