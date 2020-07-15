@@ -36,7 +36,6 @@
     xhr.addEventListener('load', function () {
       onSuccess(xhr.response);
     });
-
     xhr.open('POST', URL);
     xhr.send(data);
   };

@@ -15,6 +15,7 @@
     });
 
     if (matches) {
+      fileImageChooser.setCustomValidity('');
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
@@ -22,6 +23,8 @@
       });
 
       reader.readAsDataURL(file);
+    } else {
+      fileImageChooser.setCustomValidity('Не верный формат изображения');
     }
   });
 })();
