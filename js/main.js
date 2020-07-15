@@ -22,6 +22,8 @@ function deactivate() {
   window.resetMapPin();
   window.setAdress();
   window.resetImg();
+  window.popupClose();
+  document.querySelector('.map__filters').reset();
 }
 
 var onPostSuccess = function () {
@@ -42,7 +44,17 @@ var submitHandler = function (evt) {
   window.upload(new FormData(window.form), onPostSuccess);
   evt.preventDefault();
 };
+window.form.addEventListener('click', function () {
+  window.roomCapacityValidte();
+  window.titleLengthValidate();
+  window.priceLengthValidate();
+  window.typeAppValidte();
+});
 window.form.addEventListener('submit', submitHandler);
+
+var typeHouse = document.querySelector('#type');
+typeHouse.addEventListener('input', window.typeAppPlaceholder);
+
 
 var addFilter = function (name, callback, value) {
   window.filters[name] = {callback: callback, value: value};
@@ -92,5 +104,6 @@ titleInput.addEventListener('input', window.titleLength);
 
 window.resetMap.addEventListener('click', deactivate);
 window.setAdress();
+window.deactivateForm();
 
 
