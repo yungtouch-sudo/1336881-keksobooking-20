@@ -1,5 +1,14 @@
 'use strict';
 (function () {
+  var maxRenderCard = 5;
+  var offsetToCenterPin = 32;
+  var offsetToBottomPin = 75;
+  var defaultPinX = 570;
+  var defaultPinY = 375;
+  var mapBorderTop = 130;
+  var mapBorderBottom = 630;
+  var mapBorderLeft = 0;
+  var mapBorderRight = 1135;
   window.activateMap = function () {
     window.map.classList.remove('map--faded');
 
@@ -65,7 +74,7 @@
     var keys = Object.keys(window.filters);
     var result = cards;
     for (var i = 0; i < keys.length; i += 1) {
-      result = window.filters[keys[i]].callback(cards, window.filters[keys[i]].value);
+      result = window.filters[keys[i]].callback(result, window.filters[keys[i]].value);
     }
     return result;
   };
@@ -77,7 +86,7 @@
     for (var i = 0; i < oldPins.length; i += 1) {
       oldPins[i].remove();
     }
-    for (var j = 0; j < 5 && j < filterCards.length; j++) {
+    for (var j = 0; j < maxRenderCard && j < filterCards.length; j++) {
       fragment.appendChild(window.renderPin(filterCards[j]));
     }
     window.map.appendChild(fragment);
@@ -86,21 +95,27 @@
   var mapGlobal = document.querySelector('.map');
   mapGlobal.addEventListener('mousemove', function (evt) {
     if (mapPinMove) {
-      window.mainPin.style.top = (evt.pageY - mapGlobal.offsetTop - 32) + 'px';
-      window.mainPin.style.left = (evt.pageX - mapGlobal.offsetLeft - 32) + 'px';
+      var y = evt.pageY - mapGlobal.offsetTop - offsetToCenterPin;
+      var x = evt.pageX - mapGlobal.offsetLeft - offsetToCenterPin;
+      if (y > mapBorderTop && y < mapBorderBottom) {
+        window.mainPin.style.top = y + 'px';
+      }
+      if (x > mapBorderLeft && x < mapBorderRight) {
+        window.mainPin.style.left = x + 'px';
+      }
+      window.adress(evt.target.offsetTop - offsetToBottomPin, evt.target.offsetLeft - offsetToCenterPin);
     }
   });
   window.mainPin.addEventListener('mousedown', function () {
     mapPinMove = true;
   });
-  window.mainPin.addEventListener('mouseup', function (evt) {
+  window.addEventListener('mouseup', function () {
     mapPinMove = false;
-    window.setAdress(evt.target.offsetTop - 75, evt.target.offsetLeft - 32);
   });
 
   window.resetMapPin = function () {
-    window.mainPin.style.top = 375 + 'px';
-    window.mainPin.style.left = 570 + 'px';
+    window.mainPin.style.top = defaultPinY + 'px';
+    window.mainPin.style.left = defaultPinX + 'px';
   };
 })();
 

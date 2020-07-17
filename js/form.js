@@ -1,8 +1,14 @@
 'use strict';
 (function () {
-  window.setAdress = function () {
-    var adresInput = document.querySelector('#address');
-    adresInput.value = window.mainPin.offsetTop + ', ' + window.mainPin.offsetLeft;
+  var minPrice = {
+    bungalo: '0',
+    flat: '1000',
+    house: '5000',
+    palace: '10000'
+  };
+  window.adress = function () {
+    var adressField = document.querySelector('#address');
+    adressField.value = window.mainPin.offsetTop + ', ' + window.mainPin.offsetLeft;
   };
 
   window.activateForm = function () {
@@ -24,24 +30,28 @@
     }
   };
 
-  window.roomCapacityValidte = function () {
+  window.roomCheck = function () {
     var roomNumber = document.querySelector('#room_number');
     var capacity = document.querySelector('#capacity');
     capacity.setCustomValidity('');
     roomNumber.setCustomValidity('');
-    if (roomNumber.value === 100 && capacity.value !== 0) {
+    if (roomNumber.value === '100' && capacity.value !== '0') {
       capacity.setCustomValidity('100 комнат не для гостей');
       return false;
     }
+    if (capacity.value === '0' && roomNumber.value !== '100') {
+      roomNumber.setCustomValidity('Не для гостей может быть от 100 комнат');
+      return false;
+    }
     if (capacity.value > roomNumber.value) {
-      capacity.setCustomValidity('число гостей не должно превышать число коммнат.');
-      roomNumber.setCustomValidity('число гостей не должно превышать число коммнат.');
+      capacity.setCustomValidity('число гостей не должно превышать число комнат.');
+      roomNumber.setCustomValidity('число гостей не должно превышать число комнат.');
       return false;
     }
     return true;
   };
 
-  window.titleLengthValidate = function () {
+  window.titleLengthCheck = function () {
     var titleInput = document.querySelector('#title');
     titleInput.setCustomValidity('');
     if (titleInput.value.length < 30) {
@@ -55,7 +65,7 @@
     return true;
   };
 
-  window.priceLengthValidate = function () {
+  window.priceLengthCheck = function () {
     var priceInput = document.querySelector('#price');
     priceInput.setCustomValidity('');
     if (priceInput.value > 1000000) {
@@ -66,57 +76,36 @@
   };
 
   window.resetImg = function () {
-    document.querySelector('.ad-form-header__preview img').remove();
-    document.querySelector('.ad-form__photo').remove();
+    var avatar = document.querySelector('.ad-form-header__preview img');
+    var photos = document.querySelectorAll('.ad-form__photo img');
+    if (avatar) {
+      avatar.remove();
+    }
+    photos.forEach(function (img) {
+      img.remove();
+    });
   };
 
-  window.typeAppPlaceholder = function () {
+  window.setPriceLimit = function () {
     var typeHouse = document.querySelector('#type');
     var typePrice = document.querySelector('#price');
 
-    if (typeHouse.value === 'bungalo') {
-      typePrice.value = '0';
-      return false;
-    }
-    if (typeHouse.value === 'flat') {
-      typePrice.value = 1000;
-      return false;
-    }
-    if (typeHouse.value === 'house') {
-      typePrice.value = 5000;
-      return false;
-    }
-    if (typeHouse.value === 'palace') {
-      typePrice.value = 10000;
-      return false;
-    }
+    typePrice.setAttribute('placeholder', minPrice[typeHouse.value]);
+    typePrice.setAttribute('min', minPrice[typeHouse.value]);
 
     return true;
   };
 
-  window.typeAppValidte = function () {
+  window.typeCheck = function () {
     var typeHouse = document.querySelector('#type');
     var typePrice = document.querySelector('#price');
     typeHouse.setCustomValidity('');
     typePrice.setCustomValidity('');
 
-    if (typeHouse.value === 'bungalo' && typePrice.value < 0) {
-      typePrice.setCustomValidity('минимальная цена за ночь 0');
+    if (typePrice.value < minPrice[typeHouse.value]) {
+      typePrice.setCustomValidity('минимальная цена за ночь ' + minPrice[typeHouse.value]);
       return false;
     }
-    if (typeHouse.value === 'flat' && typePrice.value < 1000) {
-      typePrice.setCustomValidity('минимальная цена за ночь 1 000');
-      return false;
-    }
-    if (typeHouse.value === 'house' && typePrice.value < 5000) {
-      typePrice.setCustomValidity('минимальная цена за ночь 5 000');
-      return false;
-    }
-    if (typeHouse.value === 'palace' && typePrice.value < 10000) {
-      typePrice.setCustomValidity('минимальная цена за ночь 10 000');
-      return false;
-    }
-
     return true;
   };
 
