@@ -65,13 +65,14 @@
     var photos = card.querySelector('.popup__photos');
     photos.innerHTML = window.addPhoto(cardView.offer.photos);
 
-    card.addEventListener('click', window.popupClose);
+    card.querySelector('.popup__close').addEventListener('click', function () {
+      window.popupClose();
+    });
     document.addEventListener('keydown', function (evt) {
       if (evt.key === 'Escape') {
         window.popupClose();
       }
     });
-
 
     return card;
   };
