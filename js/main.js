@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var loadUrl = 'https://javascript.pages.academy/keksobooking/data';
+  var LOAD_URL = 'https://javascript.pages.academy/keksobooking/data';
   var showError = function (message, againCb) {
     var errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
     errorMessage.querySelector('.error__message').innerText = message;
@@ -8,11 +8,13 @@
     errorMessage.addEventListener('click', function () {
       errorMessage.remove();
     });
-    document.addEventListener('keydown', function (evt) {
+    var onErrorMessageClose = function (evt) {
       if (evt.key === 'Escape') {
         errorMessage.remove();
+        errorMessage.querySelector('.error__button').removeEventListener('click', onErrorMessageClose);
       }
-    });
+    };
+    document.addEventListener('keydown', onErrorMessageClose);
     errorMessage.querySelector('.error__button').addEventListener('click', function () {
       errorMessage.remove();
       againCb();
@@ -26,7 +28,7 @@
 
   var onLoadError = function (error) {
     showError(error, function () {
-      window.load(loadUrl, onLoadSuccess, onLoadError);
+      window.load(LOAD_URL, onLoadSuccess, onLoadError);
     });
   };
 
@@ -35,10 +37,15 @@
     window.activateForm();
     window.adress();
     if (window.offers.length === 0) {
-      window.load(loadUrl, onLoadSuccess, onLoadError);
+      window.load(LOAD_URL, onLoadSuccess, onLoadError);
     } else {
       window.drawMap(window.offers);
     }
+    window.mainPin.removeEventListener('mousedown', onActivate);
+  }
+
+  function onActivate() {
+    activate();
   }
 
   function deactivate() {
@@ -50,20 +57,22 @@
     window.popupClose();
     document.querySelector('.map__filters').reset();
     window.filters = {};
+    window.mainPin.addEventListener('mousedown', onActivate);
   }
 
   var onPostSuccess = function () {
     deactivate();
     var successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
     window.map.appendChild(successMessage);
-    successMessage.addEventListener('click', function () {
-      successMessage.remove();
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
+    var onSuccessMessageClose = function (evt) {
+      if (evt.type === 'click' || evt.key === 'Escape') {
         successMessage.remove();
+        document.removeEventListener('keydown', onSuccessMessageClose);
+        successMessage.removeEventListener('click', onSuccessMessageClose);
       }
-    });
+    };
+    successMessage.addEventListener('click', onSuccessMessageClose);
+    document.addEventListener('keydown', onSuccessMessageClose);
   };
 
   var onPostError = function (error) {
@@ -89,18 +98,17 @@
     window.setPriceLimit();
   });
 
+  var drawMapWithoutDebounce = window.debounce(function () {
+    window.drawMap(window.offers);
+  });
 
   var addFilter = function (name, callback, value) {
     window.filters[name] = {callback: callback, value: value};
     window.popupClose();
-    window.debounce(function () {
-      window.drawMap(window.offers);
-    })();
+    drawMapWithoutDebounce();
   };
 
-  window.mainPin.addEventListener('mousedown', function () {
-    activate();
-  });
+  window.mainPin.addEventListener('mousedown', onActivate);
   window.mainPin.addEventListener('keydown', function (evt) {
     if (evt.key === 'Tab') {
       activate();

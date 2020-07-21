@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var minPrice = {
+  var MIN_PRICE = {
     bungalo: '0',
     flat: '1000',
     house: '5000',
@@ -8,7 +8,7 @@
   };
   window.adress = function () {
     var adressField = document.querySelector('#address');
-    adressField.value = window.mainPin.offsetTop + ', ' + window.mainPin.offsetLeft;
+    adressField.value = (window.mainPin.offsetLeft + window.OFFSET_TO_CENTER_PIN) + ', ' + (window.mainPin.offsetTop);
   };
 
   window.activateForm = function () {
@@ -90,8 +90,8 @@
     var typeHouse = document.querySelector('#type');
     var typePrice = document.querySelector('#price');
 
-    typePrice.setAttribute('placeholder', minPrice[typeHouse.value]);
-    typePrice.setAttribute('min', minPrice[typeHouse.value]);
+    typePrice.setAttribute('placeholder', MIN_PRICE[typeHouse.value]);
+    typePrice.setAttribute('min', MIN_PRICE[typeHouse.value]);
 
     return true;
   };
@@ -102,8 +102,8 @@
     typeHouse.setCustomValidity('');
     typePrice.setCustomValidity('');
 
-    if (typePrice.value < minPrice[typeHouse.value]) {
-      typePrice.setCustomValidity('минимальная цена за ночь ' + minPrice[typeHouse.value]);
+    if (Number(typePrice.value) < Number(MIN_PRICE[typeHouse.value])) {
+      typePrice.setCustomValidity('минимальная цена за ночь ' + MIN_PRICE[typeHouse.value]);
       return false;
     }
     return true;

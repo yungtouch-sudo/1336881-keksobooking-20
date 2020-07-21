@@ -65,14 +65,15 @@
     var photos = card.querySelector('.popup__photos');
     photos.innerHTML = window.addPhoto(cardView.offer.photos);
 
-    card.querySelector('.popup__close').addEventListener('click', function () {
-      window.popupClose();
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape') {
+    var onPopupClose = function(e) {
+      if (e.type === 'click' || e.key === 'Escape') {
         window.popupClose();
+        document.removeEventListener('keydown', onPopupClose);
+        card.querySelector('.popup__close').removeEventListener('click', onPopupClose);
       }
-    });
+    };
+    card.querySelector('.popup__close').addEventListener('click', onPopupClose);
+    document.addEventListener('keydown', onPopupClose);
 
     return card;
   };

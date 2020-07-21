@@ -2,7 +2,7 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  var imageSize = 70;
+  var IMAGE_SIZE = 70;
   var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
   var avatarPreview = document.querySelector('.ad-form-header__preview');
   var photoChooser = document.querySelector('.ad-form__upload input[type=file]');
@@ -23,8 +23,8 @@
       reader.addEventListener('load', function () {
         var img = document.createElement('img');
         img.src = reader.result;
-        img.setAttribute('width', imageSize);
-        img.setAttribute('height', imageSize);
+        img.setAttribute('width', IMAGE_SIZE);
+        img.setAttribute('height', IMAGE_SIZE);
         previewImageUsers.appendChild(img);
       });
 

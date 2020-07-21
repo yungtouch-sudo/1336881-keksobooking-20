@@ -1,16 +1,16 @@
 'use strict';
 (function () {
-  var priceLimits = {
+  var PRICE_LIMITS = {
     low: {max: '10000'},
     middle: {min: '10000', max: '50000'},
     high: {min: '50000'}
   };
-  var guests = {
+  var GUESTS = {
     one: '1',
     two: '2',
     three: '3'
   };
-  var rooms = {
+  var ROOMS = {
     one: '1',
     two: '2',
     three: '3',
@@ -37,7 +37,7 @@
 
     if (value === 'middle') {
       for (var k = 0; k < cards.length; k += 1) {
-        if (cards[k].offer.price >= priceLimits.middle.min && cards[k].offer.price <= priceLimits.middle.max) {
+        if (cards[k].offer.price >= PRICE_LIMITS.middle.min && cards[k].offer.price <= PRICE_LIMITS.middle.max) {
           results.push(cards[k]);
         }
       }
@@ -45,7 +45,7 @@
 
     if (value === 'low') {
       for (var i = 0; i < cards.length; i += 1) {
-        if (cards[i].offer.price < priceLimits.low.max) {
+        if (cards[i].offer.price < PRICE_LIMITS.low.max) {
           results.push(cards[i]);
         }
       }
@@ -53,7 +53,7 @@
 
     if (value === 'high') {
       for (var j = 0; j < cards.length; j += 1) {
-        if (cards[j].offer.price > priceLimits.high.min) {
+        if (cards[j].offer.price > PRICE_LIMITS.high.min) {
           results.push(cards[j]);
         }
       }
@@ -68,25 +68,25 @@
     }
     var results = [];
 
-    if (value === rooms.one) {
+    if (value === ROOMS.one) {
       for (var i = 0; i < cards.length; i += 1) {
-        if (cards[i].offer.rooms >= rooms.one && cards[i].offer.rooms <= rooms.one) {
+        if (cards[i].offer.rooms >= ROOMS.one && cards[i].offer.rooms <= ROOMS.one) {
           results.push(cards[i]);
         }
       }
     }
 
-    if (value === rooms.two) {
+    if (value === ROOMS.two) {
       for (var k = 0; k < cards.length; k += 1) {
-        if (cards[k].offer.rooms >= rooms.two && cards[k].offer.rooms <= rooms.two) {
+        if (cards[k].offer.rooms >= ROOMS.two && cards[k].offer.rooms <= ROOMS.two) {
           results.push(cards[k]);
         }
       }
     }
 
-    if (value === rooms.three) {
+    if (value === ROOMS.three) {
       for (var j = 0; j < cards.length; j += 1) {
-        if (cards[j].offer.rooms >= rooms.three && cards[j].offer.rooms <= rooms.three) {
+        if (cards[j].offer.rooms >= ROOMS.three && cards[j].offer.rooms <= ROOMS.three) {
           results.push(cards[j]);
         }
       }
@@ -101,25 +101,25 @@
     }
     var results = [];
 
-    if (value === guests.one) {
+    if (value === GUESTS.one) {
       for (var k = 0; k < cards.length; k += 1) {
-        if (cards[k].offer.guests >= guests.one && cards[k].offer.guests <= guests.one) {
+        if (cards[k].offer.guests >= GUESTS.one && cards[k].offer.guests <= GUESTS.one) {
           results.push(cards[k]);
         }
       }
     }
 
-    if (value === guests.two) {
+    if (value === GUESTS.two) {
       for (var i = 0; i < cards.length; i += 1) {
-        if (cards[i].offer.guests >= guests.two && cards[i].offer.guests <= guests.two) {
+        if (cards[i].offer.guests >= GUESTS.two && cards[i].offer.guests <= GUESTS.two) {
           results.push(cards[i]);
         }
       }
     }
 
-    if (value === guests.three) {
+    if (value === GUESTS.three) {
       for (var j = 0; j < cards.length; j += 1) {
-        if (cards[j].offer.guests >= guests.many && cards[j].offer.guests <= guests.many) {
+        if (cards[j].offer.guests >= GUESTS.many && cards[j].offer.guests <= GUESTS.many) {
           results.push(cards[j]);
         }
       }
