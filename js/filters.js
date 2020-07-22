@@ -3,18 +3,18 @@
   var PRICE_LIMITS = {
     low: {max: '10000'},
     middle: {min: '10000', max: '50000'},
-    high: {min: '50000'}
+    high: {min: '50000'},
   };
   var GUESTS = {
     one: '1',
     two: '2',
-    three: '3'
+    three: '3',
   };
   var ROOMS = {
     one: '1',
     two: '2',
     three: '3',
-    many: '100'
+    many: '100',
   };
 
   window.filterType = function (cards, value) {

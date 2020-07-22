@@ -37,10 +37,10 @@
   var capacity = document.querySelector('#capacity');
 
   roomNumber.addEventListener('input', function () {
-    window.roomCapacity();
+    window.roomCheck();
   });
   capacity.addEventListener('input', function () {
-    window.roomCapacity();
+    window.roomCheck();
   });
 
   window.popupClose = function () {
@@ -99,7 +99,7 @@
   var mapGlobal = document.querySelector('.map');
   window.addEventListener('mousemove', function (evt) {
     if (mapPinMove) {
-      var newY = evt.pageY - mapGlobal.offsetTop - window.OFFSET_TO_BOTTOM_PIN;
+      var newY = evt.pageY - mapGlobal.offsetTop - window.OFFSET_TO_CENTER_PIN;
       var newX = evt.pageX - mapGlobal.offsetLeft - window.OFFSET_TO_CENTER_PIN;
       if (newY >= MAP_BORDER_TOP && newY <= MAP_BORDER_BOTTOM) {
         window.mainPin.style.top = newY + 'px';
@@ -112,7 +112,7 @@
         }
       }
 
-      if (newX >= MAP_BORDER_LEFT && newX <= MAP_BORDER_RIGHT) {
+      if (newX + window.OFFSET_TO_CENTER_PIN >= MAP_BORDER_LEFT && newX + window.OFFSET_TO_CENTER_PIN <= MAP_BORDER_RIGHT) {
         window.mainPin.style.left = newX + 'px';
       } else {
         if (newX < MAP_BORDER_LEFT) {
@@ -122,7 +122,7 @@
           window.mainPin.style.left = (MAP_BORDER_RIGHT - window.OFFSET_TO_CENTER_PIN) + 'px';
         }
       }
-      window.adress(evt.target.offsetTop - window.OFFSET_TO_BOTTOM_PIN, evt.target.offsetLeft);
+      window.setAddress(evt.target.offsetTop - window.OFFSET_TO_BOTTOM_PIN, evt.target.offsetLeft);
     }
   });
   window.mainPin.addEventListener('mousedown', function () {

@@ -65,7 +65,7 @@
     var photos = card.querySelector('.popup__photos');
     photos.innerHTML = window.addPhoto(cardView.offer.photos);
 
-    var onPopupClose = function(e) {
+    var onPopupClose = function (e) {
       if (e.type === 'click' || e.key === 'Escape') {
         window.popupClose();
         document.removeEventListener('keydown', onPopupClose);

@@ -4,11 +4,11 @@
     bungalo: '0',
     flat: '1000',
     house: '5000',
-    palace: '10000'
+    palace: '10000',
   };
-  window.adress = function () {
-    var adressField = document.querySelector('#address');
-    adressField.value = (window.mainPin.offsetLeft + window.OFFSET_TO_CENTER_PIN) + ', ' + (window.mainPin.offsetTop);
+  window.setAddress = function () {
+    var addressField = document.querySelector('#address');
+    addressField.value = (window.mainPin.offsetLeft + window.OFFSET_TO_CENTER_PIN) + ', ' + (window.mainPin.offsetTop);
   };
 
   window.activateForm = function () {
