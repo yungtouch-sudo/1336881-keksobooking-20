@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   var PRICE_LIMITS = {
     low: {max: '10000'},

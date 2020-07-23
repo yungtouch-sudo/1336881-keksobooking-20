@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   var MIN_PRICE = {
     bungalo: '0',
@@ -6,12 +7,17 @@
     house: '5000',
     palace: '10000',
   };
+  var formIsActive = false;
   window.setAddress = function () {
     var addressField = document.querySelector('#address');
-    addressField.value = (window.mainPin.offsetLeft + window.OFFSET_TO_CENTER_PIN) + ', ' + (window.mainPin.offsetTop);
+    var offsetY = formIsActive ? window.OFFSET_TO_BOTTOM_PIN : window.OFFSET_TO_CENTER_PIN;
+    addressField.value = (window.mainPin.offsetLeft + window.OFFSET_TO_CENTER_PIN) +
+      ', ' +
+      (window.mainPin.offsetTop + offsetY);
   };
 
   window.activateForm = function () {
+    formIsActive = true;
     var addForm = document.querySelector('.ad-form');
     addForm.classList.remove('ad-form--disabled');
     var inputSelect = addForm.querySelectorAll('input, select, textarea, [type="submit"]');
@@ -21,6 +27,7 @@
   };
 
   window.deactivateForm = function () {
+    formIsActive = false;
     var addForm = document.querySelector('.ad-form');
     addForm.reset();
     addForm.classList.add('ad-form--disabled');

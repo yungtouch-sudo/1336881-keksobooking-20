@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   window.mainPin = document.querySelector('.map__pin--main');
   window.map = document.querySelector('.map');
